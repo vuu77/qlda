@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý dự án CNTT</title>
+    <link rel="stylesheet" href="./assets/css/styles.css">
+</head>
+<body>
+  <div class="container" id="dashboardRoot">
+    <div class="header">
+      <div class="brand">
+        <h1>🚀 IT Project Management</h1>
+        <p>Quản lý dự án CNTT theo mã dự án, công việc, chi phí và lịch trình</p>
+      </div>
+      <div class="userbar">
+        <span>Xin chào, <strong id="helloUser">Người dùng</strong></span>
+        <button id="logoutBtn" class="btn-secondary">Đăng xuất</button>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="col-3 card kpi"><div class="label">Tổng công việc</div><div class="value" id="sumTasks">0</div></div>
+      <div class="col-3 card kpi"><div class="label">Tổng giờ Expert</div><div class="value" id="sumHours">0</div></div>
+      <div class="col-3 card kpi"><div class="label">Tổng chi phí</div><div class="value" id="sumCost">0 đ</div></div>
+      <div class="col-3 card kpi"><div class="label">Dự án đang mở</div><div class="value" id="currentProject">Chưa chọn</div><div class="muted" id="currentProjectMeta"></div></div>
+
+      <div class="col-4 card">
+        <h3>Tạo dự án</h3>
+        <div id="projectMsg" class="notice hidden"></div>
+        <form id="projectForm">
+          <label>Mã dự án</label><input id="projectCode" required placeholder="PRJ-001">
+          <label>Tên dự án</label><input id="projectName" required>
+          <label>Mô tả</label><textarea id="projectDesc"></textarea>
+          <label>Đội dự án</label><input id="teamName" placeholder="Team A">
+          <div class="row">
+            <div><label>Ngày bắt đầu</label><input id="projectStart" type="date"></div>
+            <div><label>Ngày kết thúc</label><input id="projectEnd" type="date"></div>
+          </div>
+          <div class="actions"><button class="btn" type="submit">Lưu dự án</button></div>
+        </form>
+      </div>
+
+      <div class="col-8 card">
+        <h3>Danh sách dự án</h3>
+        <p class="muted">Bấm vào một dự án để mở và quản lý theo mã dự án.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Mã</th><th>Tên dự án</th><th>Đội dự án</th><th>Bắt đầu</th><th>Kết thúc</th></tr></thead>
+            <tbody id="projectList"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="col-6 card">
+        <h3>Quản lý bảng công việc</h3>
+        <div id="taskMsg" class="notice hidden"></div>
+        <form id="taskForm">
+          <input id="taskProjectId" type="hidden" required>
+          <label>Tên công việc</label><input id="taskName" required>
+          <label>Mô tả công việc</label><textarea id="taskDesc"></textarea>
+          <label>Người phụ trách</label><input id="assignedTo">
+          <div class="row">
+            <div><label>Giờ Expert ước lượng</label><input id="expertHours" type="number" step="0.5"></div>
+            <div><label>Giờ thực tế</label><input id="actualHours" type="number" step="0.5"></div>
+          </div>
+          <div class="row">
+            <div><label>Đơn giá / giờ</label><input id="hourlyRate" type="number" step="1000"></div>
+            <div><label>Chi phí ước lượng</label><input id="estimatedCost" type="number" step="1000" placeholder="Để trống sẽ tự tính"></div>
+          </div>
+          <div class="row">
+            <div><label>Trạng thái</label><select id="taskStatus"><option value="pending">THẤP </option><option value="in_progress"> TRUNG BÌNH</option><option value="done">CAO</option></select></div>
+            <div></div>
+          </div>
+          <div class="row">
+            <div><label>Ngày bắt đầu</label><input id="taskStart" type="date"></div>
+           
+          </div>
+          <div class="actions"><button class="btn" type="submit">Thêm công việc</button></div>
+        </form>
+      </div>
+
+      <div class="col-6 card">
+        <h3>Lịch trình dự án</h3>
+        <div id="scheduleMsg" class="notice hidden"></div>
+        <form id="projectScheduleForm">
+          <input id="scheduleProjectId" type="hidden" required>
+          <label>Tên mốc / giai đoạn</label><input id="milestoneName" required>
+          <div class="row">
+            <div><label>Ngày bắt đầu</label><input id="milestoneStart" type="date"></div>
+            <div><label>Ngày kết thúc</label><input id="milestoneEnd" type="date"></div>
+          </div>
+          <label>Ghi chú</label><textarea id="milestoneNote"></textarea>
+          <div class="actions"><button class="btn" type="submit">Lưu lịch trình</button></div>
+        </form>
+      </div>
+
+      <div class="col-6 card">
+        <h3>Danh sách công việc</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Công việc</th><th>Phụ trách</th><th>Giờ Expert</th><th>Chi phí</th><th>Trạng thái</th><th>Bắt đầu</th><th>Kết thúc</th></tr></thead>
+            <tbody id="taskList"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="col-6 card">
+        <h3>Lịch trình của dự án</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Mốc</th><th>Bắt đầu</th><th>Kết thúc</th><th>Ghi chú</th></tr></thead>
+            <tbody id="scheduleList"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="./assets/scripts/app.js"></script>
+</body>
+</html>
