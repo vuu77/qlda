@@ -1,371 +1,2185 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#ff5c8a">
-  <title>Gửi đến em ❤️</title>
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{
-      font-family:Arial,Helvetica,sans-serif;
-      color:#5c2b3a;
-      background:linear-gradient(135deg,#ffd8e6,#fff5f8,#ffc2d7);
-      overflow-x:hidden;
-    }
-    #fireworks{
-      position:fixed;
-      inset:0;
-      width:100%;
-      height:100%;
-      z-index:9998;
-      pointer-events:none;
-    }
-    .wrap{width:min(100% - 24px,980px);margin:auto;position:relative;z-index:1}
-    .hero{
-      min-height:100svh;display:flex;flex-direction:column;align-items:center;
-      justify-content:center;text-align:center;padding:30px 0
-    }
-    .hero h1{font-size:clamp(38px,10vw,68px);color:#e63870;margin-bottom:18px}
-    .hero p{font-size:clamp(17px,4.5vw,21px);line-height:1.7;margin-bottom:25px}
-    button{
-      border:0;border-radius:999px;padding:15px 26px;background:#ff4f86;color:white;
-      font-size:17px;font-weight:bold;cursor:pointer;box-shadow:0 10px 25px rgba(255,79,134,.28)
-    }
-    button:active{transform:scale(.97)}
-    .card{
-      background:rgba(255,255,255,.88);border-radius:26px;
-      box-shadow:0 14px 40px rgba(100,40,65,.13)
-    }
-    #loveMessage{
-      display:none;padding:28px 20px;margin:0 auto 60px;text-align:center
-    }
-    #loveMessage.show{display:block;animation:pop .5s ease}
-    #loveMessage h2{font-size:clamp(30px,8vw,44px);color:#e63870;margin-bottom:16px}
-    #loveMessage p{font-size:17px;line-height:1.8;margin:12px auto;max-width:700px}
-    #loveMessage h3{margin-top:18px;color:#ff4f86}
-    .gallery{padding:10px 0 60px}
-    .gallery h2{text-align:center;color:#e63870;font-size:clamp(28px,7vw,38px);margin-bottom:28px}
-    .photos{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .photo{padding:10px 10px 18px;text-align:center}
-    .photo img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:20px;display:block}
-    .photo p{margin-top:12px;font-weight:bold}
-    .question{padding:42px 18px;text-align:center;margin-bottom:50px}
-    .question h2{font-size:clamp(30px,8vw,42px);color:#e63870;margin-bottom:22px}
-    .actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
-    #answer{min-height:45px;margin-top:22px;color:#e63870;font-size:clamp(20px,5vw,28px);font-weight:bold;line-height:1.5}
-    footer{text-align:center;background:#e63870;color:white;padding:22px 14px}
-    .heart{
-      position:fixed;bottom:-40px;z-index:9999;pointer-events:none;
-      animation:fly linear forwards
-    }
-    @keyframes fly{
-      from{transform:translateY(0) rotate(0deg);opacity:1}
-      to{transform:translateY(-115vh) rotate(360deg);opacity:0}
-    }
-    @keyframes pop{
-      from{opacity:0;transform:translateY(20px) scale(.97)}
-      to{opacity:1;transform:none}
-    }
-    @media(max-width:760px){
-      .photos{grid-template-columns:1fr}
-      .photo{max-width:420px;margin:auto}
-      .actions{flex-direction:column;align-items:center}
-      .actions button{width:min(100%,300px)}
-    }
-  </style>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <meta name="theme-color" content="#ff5c8a">
+
+    <title>Gửi đến em ❤️</title>
+
+    <style>
+        /* =========================
+           RESET
+        ========================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: 100dvh;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            color: #5c2b3a;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffd8e6 0%,
+                    #fff5f8 45%,
+                    #ffc2d7 100%
+                );
+
+            overflow-x: hidden;
+
+            position: relative;
+
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
+
+            -webkit-tap-highlight-color: transparent;
+        }
+
+
+        /* =========================
+           PHÁO HOA
+        ========================== */
+
+        #fireworks {
+            position: fixed;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            pointer-events: none;
+
+            /*
+                Pháo hoa nằm trên nền
+                nhưng dưới nội dung
+            */
+            z-index: 2;
+        }
+
+
+        /* =========================
+           NỘI DUNG CHÍNH
+        ========================== */
+
+        .wrap {
+            width: min(
+                calc(100% - 24px),
+                980px
+            );
+
+            margin: 0 auto;
+
+            position: relative;
+
+            z-index: 5;
+        }
+
+
+        /* =========================
+           MÀN HÌNH ĐẦU
+        ========================== */
+
+        .hero {
+            min-height: 100vh;
+            min-height: 100dvh;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            align-items: center;
+
+            text-align: center;
+
+            padding:
+                calc(30px + env(safe-area-inset-top))
+                10px
+                30px;
+        }
+
+        .small-heart {
+            font-size: 45px;
+
+            margin-bottom: 15px;
+
+            animation: beat 1.3s infinite;
+        }
+
+        .hero h1 {
+            color: #e63870;
+
+            font-size: clamp(
+                38px,
+                10vw,
+                68px
+            );
+
+            line-height: 1.15;
+
+            margin-bottom: 18px;
+
+            text-shadow:
+                0 5px 18px
+                rgba(230, 56, 112, 0.16);
+        }
+
+        .hero p {
+            max-width: 650px;
+
+            font-size: clamp(
+                17px,
+                4.5vw,
+                21px
+            );
+
+            line-height: 1.7;
+
+            margin-bottom: 27px;
+        }
+
+
+        /* =========================
+           BUTTON
+        ========================== */
+
+        button {
+            border: none;
+
+            border-radius: 999px;
+
+            padding: 16px 28px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff4f86,
+                    #e63870
+                );
+
+            color: white;
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 10px 25px
+                rgba(255, 79, 134, 0.30);
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+
+            touch-action: manipulation;
+        }
+
+        button:active {
+            transform: scale(0.96);
+        }
+
+        @media (hover: hover) {
+            button:hover {
+                transform: translateY(-3px);
+
+                box-shadow:
+                    0 14px 30px
+                    rgba(255, 79, 134, 0.38);
+            }
+        }
+
+
+        /* =========================
+           CARD
+        ========================== */
+
+        .card {
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.93
+                );
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.85
+                );
+
+            border-radius: 26px;
+
+            box-shadow:
+                0 14px 40px
+                rgba(
+                    100,
+                    40,
+                    65,
+                    0.13
+                );
+
+            backdrop-filter: blur(8px);
+
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+
+        /* =========================
+           LỜI TỎ TÌNH
+        ========================== */
+
+        #loveMessage {
+            display: none;
+
+            padding: 32px 22px;
+
+            margin:
+                0 auto
+                70px;
+
+            text-align: center;
+        }
+
+        #loveMessage.show {
+            display: block;
+
+            animation:
+                showCard
+                0.6s ease;
+        }
+
+        #loveMessage h2 {
+            color: #e63870;
+
+            font-size: clamp(
+                32px,
+                8vw,
+                46px
+            );
+
+            margin-bottom: 18px;
+        }
+
+        #loveMessage p {
+            max-width: 720px;
+
+            margin:
+                14px auto;
+
+            font-size: 17px;
+
+            line-height: 1.8;
+        }
+
+        #loveMessage h3 {
+            color: #ff4f86;
+
+            font-size: 22px;
+
+            line-height: 1.5;
+
+            margin-top: 22px;
+        }
+
+
+        /* =========================
+           ẢNH
+        ========================== */
+
+        .gallery {
+            padding:
+                10px
+                0
+                70px;
+        }
+
+        .gallery h2 {
+            text-align: center;
+
+            color: #e63870;
+
+            font-size: clamp(
+                28px,
+                7vw,
+                40px
+            );
+
+            margin-bottom: 30px;
+        }
+
+        .photos {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    3,
+                    minmax(0, 1fr)
+                );
+
+            gap: 20px;
+        }
+
+        .photo {
+            padding:
+                11px
+                11px
+                20px;
+
+            text-align: center;
+
+            overflow: hidden;
+        }
+
+        .photo img {
+            width: 100%;
+
+            aspect-ratio: 4 / 5;
+
+            object-fit: cover;
+
+            display: block;
+
+            border-radius: 20px;
+
+            background: #ffe6ef;
+        }
+
+        .photo p {
+            margin-top: 14px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+        }
+
+
+        /* =========================
+           CÂU HỎI
+        ========================== */
+
+        .question {
+            text-align: center;
+
+            padding:
+                44px
+                18px;
+
+            margin-bottom: 55px;
+        }
+
+        .question h2 {
+            color: #e63870;
+
+            font-size: clamp(
+                30px,
+                8vw,
+                43px
+            );
+
+            line-height: 1.3;
+
+            margin-bottom: 25px;
+        }
+
+        .actions {
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 14px;
+        }
+
+        #answer {
+            min-height: 50px;
+
+            margin-top: 25px;
+
+            color: #e63870;
+
+            font-size: clamp(
+                21px,
+                5vw,
+                30px
+            );
+
+            font-weight: bold;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================== */
+
+        footer {
+            position: relative;
+
+            z-index: 5;
+
+            text-align: center;
+
+            background: #e63870;
+
+            color: white;
+
+            padding:
+                24px
+                14px
+                calc(
+                    24px
+                    +
+                    env(safe-area-inset-bottom)
+                );
+
+            font-size: 15px;
+        }
+
+
+        /* =========================
+           TIM BAY
+        ========================== */
+
+        .heart {
+            position: fixed;
+
+            bottom: -50px;
+
+            pointer-events: none;
+
+            z-index: 6;
+
+            animation:
+                flyHeart
+                linear
+                forwards;
+
+            filter:
+                drop-shadow(
+                    0 3px 5px
+                    rgba(
+                        0,
+                        0,
+                        0,
+                        0.10
+                    )
+                );
+        }
+
+
+        /* =========================
+           ANIMATION
+        ========================== */
+
+        @keyframes beat {
+
+            0%,
+            100% {
+                transform:
+                    scale(1);
+            }
+
+            50% {
+                transform:
+                    scale(1.18);
+            }
+        }
+
+        @keyframes flyHeart {
+
+            0% {
+                transform:
+                    translateY(0)
+                    rotate(0deg);
+
+                opacity: 1;
+            }
+
+            100% {
+                transform:
+                    translateY(-115vh)
+                    rotate(360deg);
+
+                opacity: 0;
+            }
+        }
+
+        @keyframes showCard {
+
+            from {
+                opacity: 0;
+
+                transform:
+                    translateY(25px)
+                    scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+        }
+
+
+        /* =========================
+           ĐIỆN THOẠI
+        ========================== */
+
+        @media (max-width: 760px) {
+
+            .wrap {
+                width:
+                    calc(
+                        100%
+                        -
+                        22px
+                    );
+            }
+
+            .hero {
+                padding-left: 8px;
+                padding-right: 8px;
+            }
+
+            .hero h1 {
+                font-size:
+                    clamp(
+                        37px,
+                        12vw,
+                        52px
+                    );
+            }
+
+            #loveMessage {
+                padding:
+                    27px
+                    18px;
+
+                margin-bottom: 55px;
+            }
+
+            .photos {
+                grid-template-columns:
+                    1fr;
+
+                gap: 24px;
+            }
+
+            .photo {
+                width: 100%;
+
+                max-width: 430px;
+
+                margin: auto;
+            }
+
+            .photo img {
+                max-height: 570px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .actions button {
+                width:
+                    min(
+                        100%,
+                        310px
+                    );
+            }
+
+            .question {
+                padding:
+                    38px
+                    16px;
+            }
+        }
+
+
+        /* Điện thoại nhỏ */
+
+        @media (max-width: 390px) {
+
+            button {
+                width: 100%;
+
+                max-width: 300px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            #loveMessage p {
+                font-size: 16px;
+            }
+        }
+
+    </style>
 </head>
+
+
 <body>
-  <canvas id="fireworks"></canvas>
-  <main class="wrap">
-    <section class="hero">
-      <h1>Gửi đến em ❤️</h1>
-      <p>Anh có một điều đã muốn nói với em từ rất lâu...</p>
-      <button onclick="showLove()">Bấm vào đây nha 💌</button>
-    </section>
 
-    <section id="loveMessage" class="card">
-      <h2>Anh yêu em ❤️</h2>
-      <p>Cảm ơn em vì đã xuất hiện trong cuộc đời anh. Từ khi có em, những ngày bình thường cũng trở nên đặc biệt hơn.</p>
-      <p>Anh không biết tương lai sẽ như thế nào, nhưng anh biết rằng anh muốn có em trong tương lai đó.</p>
-      <h3>Em đồng ý ở bên anh thật lâu nhé? 🥺❤️</h3>
-    </section>
+    <!-- PHÁO HOA -->
+    <canvas id="fireworks"></canvas>
 
-    <section class="gallery">
-      <h2>Kỷ niệm của chúng mình 📸</h2>
-      <div class="photos">
-        <article class="photo card">
-          <img src="c:\Users\asus\Downloads\1789902216072_4099108558670617440_4099108558670617440_2e75ce98856cff8a95a354a6b6dd73a0.jpg" alt="Kỷ niệm 1">
-          <p>Kỷ niệm đầu tiên ❤️</p>
-        </article>
-        <article class="photo card">
-          <img src="images/anh2.jpg" alt="Kỷ niệm 2">
-          <p>Một ngày thật đẹp 🌷</p>
-        </article>
-        <article class="photo card">
-          <img src="images/anh3.jpg" alt="Kỷ niệm 3">
-          <p>Người anh thương 💕</p>
-        </article>
-      </div>
-    </section>
 
-    <section class="question card">
-      <h2>Em có yêu anh không? 🥺</h2>
-      <div class="actions">
-        <button onclick="yesLove()">Có ❤️</button>
-        <button onclick="yesLove()">Rất yêu ❤️</button>
-      </div>
-      <p id="answer"></p>
-    </section>
-  </main>
+    <main class="wrap">
 
-  <footer>Made with ❤️ dành riêng cho em</footer>
 
-  <script>
-    function showLove(){
-      const box=document.getElementById('loveMessage');
-      box.classList.add('show');
-      box.scrollIntoView({behavior:'smooth',block:'center'});
-      burstHearts(18);
-      fireworksBurst(window.innerWidth/2, window.innerHeight*0.35, 5);
-    }
+        <!-- =========================
+             TRANG ĐẦU
+        ========================== -->
 
-    function yesLove(){
-      document.getElementById('answer').textContent='Anh biết màaaa 🥹❤️ Anh cũng yêu em rất nhiều!';
-      burstHearts(30);
-      fireworksShow(5500);
-    }
+        <section class="hero">
 
-    function makeHeart(){
-      const h=document.createElement('div');
-      h.className='heart';
-      h.textContent=Math.random()>.3?'❤️':'💗';
-      h.style.left=Math.random()*100+'vw';
-      h.style.fontSize=(14+Math.random()*20)+'px';
-      h.style.animationDuration=(4+Math.random()*3)+'s';
-      document.body.appendChild(h);
-      setTimeout(()=>h.remove(),7500);
-    }
+            <div class="small-heart">
+                💗
+            </div>
 
-    function burstHearts(n){
-      for(let i=0;i<n;i++) setTimeout(makeHeart,i*50);
-    }
+            <h1>
+                Gửi đến em ❤️
+            </h1>
 
-    setInterval(makeHeart,700);
+            <p>
+                Anh có một điều
+                đã muốn nói với em
+                từ rất lâu...
+            </p>
 
-    /* ================= PHÁO HOA ================= */
-    const canvas = document.getElementById('fireworks');
-    const ctx = canvas.getContext('2d');
-    let W = innerWidth, H = innerHeight;
-    let dpr = Math.min(window.devicePixelRatio || 1, 2);
-    let particles = [];
-    let rockets = [];
-    let showUntil = 0;
+            <button
+                type="button"
+                onclick="showLove()"
+            >
+                Bấm vào đây nha 💌
+            </button>
 
-    const fireworkColors = [
-      '#ff2d55','#ff9500','#ffcc00','#34c759','#00e5ff',
-      '#0a84ff','#5e5ce6','#bf5af2','#ff375f','#ffffff'
-    ];
+        </section>
 
-    function resizeFireworks(){
-      W = innerWidth;
-      H = innerHeight;
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = W * dpr;
-      canvas.height = H * dpr;
-      canvas.style.width = W + 'px';
-      canvas.style.height = H + 'px';
-      ctx.setTransform(dpr,0,0,dpr,0,0);
-    }
-    addEventListener('resize', resizeFireworks);
-    resizeFireworks();
 
-    class Particle{
-      constructor(x,y,color,angle,speed,size=2){
-        this.x=x; this.y=y;
-        this.vx=Math.cos(angle)*speed;
-        this.vy=Math.sin(angle)*speed;
-        this.color=color;
-        this.alpha=1;
-        this.gravity=0.055 + Math.random()*0.025;
-        this.drag=0.985;
-        this.decay=0.010 + Math.random()*0.010;
-        this.size=size;
-        this.trail=[];
-        this.spark=Math.random()<0.35;
-      }
-      update(){
-        this.trail.push({x:this.x,y:this.y,a:this.alpha});
-        if(this.trail.length>6) this.trail.shift();
-        this.vx*=this.drag;
-        this.vy*=this.drag;
-        this.vy+=this.gravity;
-        this.x+=this.vx;
-        this.y+=this.vy;
-        this.alpha-=this.decay;
 
-        if(this.spark && Math.random()<0.18 && this.alpha>.35){
-          particles.push(new Particle(
-            this.x,this.y,'#ffffff',
-            Math.random()*Math.PI*2,
-            Math.random()*1.6,
-            0.8
-          ));
-          this.spark=false;
+        <!-- =========================
+             LỜI TỎ TÌNH
+        ========================== -->
+
+        <section
+            id="loveMessage"
+            class="card"
+        >
+
+            <h2>
+                Anh yêu em ❤️
+            </h2>
+
+            <p>
+                Cảm ơn em vì đã xuất hiện
+                trong cuộc đời anh.
+                Từ khi có em,
+                những ngày bình thường
+                cũng trở nên đặc biệt hơn.
+            </p>
+
+            <p>
+                Anh không biết tương lai
+                sẽ như thế nào,
+                nhưng anh biết rằng
+                anh muốn có em
+                trong tương lai đó.
+            </p>
+
+            <h3>
+                Em đồng ý ở bên anh
+                thật lâu nhé? 🥺❤️
+            </h3>
+
+        </section>
+
+
+
+        <!-- =========================
+             ALBUM ẢNH
+        ========================== -->
+
+        <section class="gallery">
+
+            <h2>
+                Kỷ niệm của chúng mình 📸
+            </h2>
+
+
+            <div class="photos">
+
+
+                <article class="photo card">
+
+                    <img
+                        src="images/anh1.jpg"
+                        alt="Kỷ niệm của chúng mình 1"
+                        loading="lazy"
+                    >
+
+                    <p>
+                        Kỷ niệm đầu tiên ❤️
+                    </p>
+
+                </article>
+
+
+
+                <article class="photo card">
+
+                    <img
+                        src="images/anh2.jpg"
+                        alt="Kỷ niệm của chúng mình 2"
+                        loading="lazy"
+                    >
+
+                    <p>
+                        Một ngày thật đẹp 🌷
+                    </p>
+
+                </article>
+
+
+
+                <article class="photo card">
+
+                    <img
+                        src="images/anh3.jpg"
+                        alt="Kỷ niệm của chúng mình 3"
+                        loading="lazy"
+                    >
+
+                    <p>
+                        Người anh thương 💕
+                    </p>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             CÂU HỎI
+        ========================== -->
+
+        <section
+            class="question card"
+        >
+
+            <h2>
+                Em có yêu anh không? 🥺
+            </h2>
+
+
+            <div class="actions">
+
+                <button
+                    type="button"
+                    onclick="yesLove()"
+                >
+                    Có ❤️
+                </button>
+
+
+                <button
+                    type="button"
+                    onclick="yesLove()"
+                >
+                    Rất yêu ❤️
+                </button>
+
+            </div>
+
+
+            <p id="answer"></p>
+
+        </section>
+
+
+    </main>
+
+
+    <footer>
+        Made with ❤️ dành riêng cho em
+    </footer>
+
+
+
+    <script>
+
+        /* =========================
+           LỜI TỎ TÌNH
+        ========================== */
+
+        function showLove() {
+
+            const box =
+                document.getElementById(
+                    "loveMessage"
+                );
+
+            box.classList.add(
+                "show"
+            );
+
+
+            setTimeout(
+                function () {
+
+                    box.scrollIntoView({
+                        behavior:
+                            "smooth",
+
+                        block:
+                            "center"
+                    });
+
+                },
+                150
+            );
+
+
+            burstHearts(15);
+
+            fireworksBurst(
+                window.innerWidth / 2,
+                window.innerHeight * 0.35,
+                4
+            );
         }
-      }
-      draw(){
-        for(let i=0;i<this.trail.length;i++){
-          const t=this.trail[i];
-          const ta=(i+1)/this.trail.length*this.alpha*.35;
-          ctx.beginPath();
-          ctx.arc(t.x,t.y,this.size*.55,0,Math.PI*2);
-          ctx.fillStyle=hexToRgba(this.color,ta);
-          ctx.fill();
+
+
+
+        /* =========================
+           BẤM ĐỒNG Ý
+        ========================== */
+
+        function yesLove() {
+
+            const answer =
+                document.getElementById(
+                    "answer"
+                );
+
+            answer.innerHTML =
+                "Anh biết màaaa 🥹❤️<br>Anh cũng yêu em rất nhiều!";
+
+
+            burstHearts(35);
+
+
+            fireworksShow(
+                6500
+            );
         }
 
-        ctx.save();
-        ctx.globalCompositeOperation='lighter';
-        ctx.shadowBlur=14;
-        ctx.shadowColor=this.color;
-        ctx.beginPath();
-        ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-        ctx.fillStyle=hexToRgba(this.color,Math.max(this.alpha,0));
-        ctx.fill();
-        ctx.restore();
-      }
-    }
 
-    class Rocket{
-      constructor(targetX,targetY,color){
-        this.x=Math.random()*W;
-        this.y=H+20;
-        this.tx=targetX;
-        this.ty=targetY;
-        this.color=color;
-        const dx=this.tx-this.x, dy=this.ty-this.y;
-        const dist=Math.hypot(dx,dy);
-        const speed=8+Math.random()*3;
-        this.vx=dx/dist*speed;
-        this.vy=dy/dist*speed;
-        this.done=false;
-        this.trail=[];
-      }
-      update(){
-        this.trail.push({x:this.x,y:this.y});
-        if(this.trail.length>8) this.trail.shift();
 
-        this.x+=this.vx;
-        this.y+=this.vy;
+        /* =========================
+           TIM BAY
+        ========================== */
 
-        const dist=Math.hypot(this.tx-this.x,this.ty-this.y);
-        if(dist<14 || this.y<=this.ty){
-          this.done=true;
-          explode(this.tx,this.ty,this.color);
+        function makeHeart() {
+
+            const heart =
+                document.createElement(
+                    "div"
+                );
+
+
+            heart.className =
+                "heart";
+
+
+            const hearts = [
+                "❤️",
+                "💗",
+                "💕",
+                "💖"
+            ];
+
+
+            heart.textContent =
+                hearts[
+                    Math.floor(
+                        Math.random()
+                        *
+                        hearts.length
+                    )
+                ];
+
+
+            heart.style.left =
+                Math.random()
+                *
+                100
+                +
+                "vw";
+
+
+            heart.style.fontSize =
+                (
+                    15
+                    +
+                    Math.random()
+                    *
+                    17
+                )
+                +
+                "px";
+
+
+            heart.style.animationDuration =
+                (
+                    5
+                    +
+                    Math.random()
+                    *
+                    3
+                )
+                +
+                "s";
+
+
+            document.body.appendChild(
+                heart
+            );
+
+
+            setTimeout(
+                function () {
+                    heart.remove();
+                },
+                8500
+            );
         }
-      }
-      draw(){
-        ctx.save();
-        ctx.globalCompositeOperation='lighter';
-        for(let i=0;i<this.trail.length;i++){
-          const t=this.trail[i];
-          ctx.beginPath();
-          ctx.arc(t.x,t.y,1.4,0,Math.PI*2);
-          ctx.fillStyle=`rgba(255,220,160,${(i+1)/this.trail.length*.45})`;
-          ctx.fill();
+
+
+
+        function burstHearts(amount) {
+
+            for (
+                let i = 0;
+                i < amount;
+                i++
+            ) {
+
+                setTimeout(
+                    makeHeart,
+                    i * 55
+                );
+            }
         }
-        ctx.shadowBlur=12;
-        ctx.shadowColor='#ffd7a8';
-        ctx.beginPath();
-        ctx.arc(this.x,this.y,2.2,0,Math.PI*2);
-        ctx.fillStyle='#fff4df';
-        ctx.fill();
-        ctx.restore();
-      }
-    }
 
-    function hexToRgba(hex,a){
-      const h=hex.replace('#','');
-      const bigint=parseInt(h,16);
-      const r=(bigint>>16)&255, g=(bigint>>8)&255, b=bigint&255;
-      return `rgba(${r},${g},${b},${a})`;
-    }
 
-    function explode(x,y,baseColor){
-      const count=70+Math.floor(Math.random()*50);
-      const palette = Math.random()<0.45
-        ? [baseColor,'#ffffff']
-        : [baseColor, fireworkColors[Math.floor(Math.random()*fireworkColors.length)]];
 
-      for(let i=0;i<count;i++){
-        const angle=(Math.PI*2)*(i/count)+Math.random()*0.06;
-        const speed=2.5+Math.random()*6.8;
-        const color=palette[Math.floor(Math.random()*palette.length)];
-        particles.push(new Particle(x,y,color,angle,speed,1.1+Math.random()*1.7));
-      }
+        /*
+            Tim bay nhẹ.
+            Trên điện thoại không tạo
+            quá nhiều để đỡ lag.
+        */
 
-      // bright core
-      for(let i=0;i<22;i++){
-        particles.push(new Particle(
-          x,y,'#ffffff',
-          Math.random()*Math.PI*2,
-          1+Math.random()*4,
-          1
-        ));
-      }
-    }
-
-    function launchFirework(x,y){
-      const color=fireworkColors[Math.floor(Math.random()*fireworkColors.length)];
-      rockets.push(new Rocket(x,y,color));
-    }
-
-    function fireworksBurst(x,y,amount=4){
-      for(let i=0;i<amount;i++){
-        setTimeout(()=>{
-          launchFirework(
-            Math.max(60,Math.min(W-60,x+(Math.random()-.5)*W*.55)),
-            Math.max(70,Math.min(H*.58,y+(Math.random()-.5)*180))
-          );
-        },i*220);
-      }
-    }
-
-    function fireworksShow(duration=5000){
-      showUntil=Date.now()+duration;
-    }
-
-    // chạy pháo hoa nhẹ khi mở trang
-    setTimeout(()=>fireworksShow(3800),700);
-
-    function animateFireworks(){
-      requestAnimationFrame(animateFireworks);
-
-      ctx.globalCompositeOperation='source-over';
-      ctx.fillStyle='rgba(10,5,20,0.16)';
-      ctx.fillRect(0,0,W,H);
-
-      if(Date.now()<showUntil && Math.random()<0.06){
-        launchFirework(
-          W*(0.15+Math.random()*0.7),
-          H*(0.13+Math.random()*0.38)
+        setInterval(
+            makeHeart,
+            1000
         );
-      }
 
-      for(let i=rockets.length-1;i>=0;i--){
-        rockets[i].update();
-        rockets[i].draw();
-        if(rockets[i].done) rockets.splice(i,1);
-      }
 
-      for(let i=particles.length-1;i>=0;i--){
-        particles[i].update();
-        particles[i].draw();
-        if(particles[i].alpha<=0) particles.splice(i,1);
-      }
-    }
-    animateFireworks();
-  </script>
+
+        /* =====================================
+           PHÁO HOA
+        ====================================== */
+
+        const canvas =
+            document.getElementById(
+                "fireworks"
+            );
+
+
+        const ctx =
+            canvas.getContext(
+                "2d"
+            );
+
+
+        let width =
+            window.innerWidth;
+
+
+        let height =
+            window.innerHeight;
+
+
+        /*
+            Giảm DPR một chút
+            để iPhone/Android chạy mượt hơn.
+        */
+
+        let dpr =
+            Math.min(
+                window.devicePixelRatio
+                ||
+                1,
+                1.5
+            );
+
+
+        let rockets = [];
+
+        let particles = [];
+
+        let showUntil = 0;
+
+
+
+        const fireworkColors = [
+
+            "#ff1744",
+
+            "#ff9100",
+
+            "#ffea00",
+
+            "#00e676",
+
+            "#00e5ff",
+
+            "#2979ff",
+
+            "#7c4dff",
+
+            "#d500f9",
+
+            "#ff4081",
+
+            "#ffffff"
+
+        ];
+
+
+
+        /* =========================
+           RESIZE CANVAS
+        ========================== */
+
+        function resizeCanvas() {
+
+            width =
+                window.innerWidth;
+
+
+            height =
+                window.innerHeight;
+
+
+            dpr =
+                Math.min(
+                    window.devicePixelRatio
+                    ||
+                    1,
+                    1.5
+                );
+
+
+            canvas.width =
+                Math.floor(
+                    width * dpr
+                );
+
+
+            canvas.height =
+                Math.floor(
+                    height * dpr
+                );
+
+
+            canvas.style.width =
+                width + "px";
+
+
+            canvas.style.height =
+                height + "px";
+
+
+            ctx.setTransform(
+                dpr,
+                0,
+                0,
+                dpr,
+                0,
+                0
+            );
+        }
+
+
+
+        window.addEventListener(
+            "resize",
+            resizeCanvas
+        );
+
+
+        window.addEventListener(
+            "orientationchange",
+            function () {
+
+                setTimeout(
+                    resizeCanvas,
+                    250
+                );
+            }
+        );
+
+
+        resizeCanvas();
+
+
+
+        /* =========================
+           PARTICLE
+        ========================== */
+
+        class Particle {
+
+            constructor(
+                x,
+                y,
+                color,
+                angle,
+                speed,
+                size
+            ) {
+
+                this.x = x;
+
+                this.y = y;
+
+
+                this.vx =
+                    Math.cos(angle)
+                    *
+                    speed;
+
+
+                this.vy =
+                    Math.sin(angle)
+                    *
+                    speed;
+
+
+                this.color =
+                    color;
+
+
+                this.alpha =
+                    1;
+
+
+                this.gravity =
+                    0.055
+                    +
+                    Math.random()
+                    *
+                    0.025;
+
+
+                this.drag =
+                    0.985;
+
+
+                this.decay =
+                    0.013
+                    +
+                    Math.random()
+                    *
+                    0.012;
+
+
+                this.size =
+                    size
+                    ||
+                    2;
+
+
+                this.trail = [];
+            }
+
+
+
+            update() {
+
+                this.trail.push({
+                    x:
+                        this.x,
+
+                    y:
+                        this.y
+                });
+
+
+                if (
+                    this.trail.length
+                    >
+                    5
+                ) {
+
+                    this.trail.shift();
+                }
+
+
+                this.vx *=
+                    this.drag;
+
+
+                this.vy *=
+                    this.drag;
+
+
+                this.vy +=
+                    this.gravity;
+
+
+                this.x +=
+                    this.vx;
+
+
+                this.y +=
+                    this.vy;
+
+
+                this.alpha -=
+                    this.decay;
+            }
+
+
+
+            draw() {
+
+                ctx.save();
+
+
+                ctx.globalCompositeOperation =
+                    "lighter";
+
+
+                /*
+                    Đuôi sáng
+                */
+
+                for (
+                    let i = 0;
+                    i
+                    <
+                    this.trail.length;
+                    i++
+                ) {
+
+                    const point =
+                        this.trail[i];
+
+
+                    const opacity =
+                        (
+                            i + 1
+                        )
+                        /
+                        this.trail.length
+                        *
+                        this.alpha
+                        *
+                        0.25;
+
+
+                    ctx.beginPath();
+
+
+                    ctx.arc(
+                        point.x,
+                        point.y,
+                        this.size
+                        *
+                        0.45,
+                        0,
+                        Math.PI
+                        *
+                        2
+                    );
+
+
+                    ctx.fillStyle =
+                        hexToRGBA(
+                            this.color,
+                            opacity
+                        );
+
+
+                    ctx.fill();
+                }
+
+
+
+                /*
+                    Điểm sáng chính
+                */
+
+                ctx.shadowBlur =
+                    14;
+
+
+                ctx.shadowColor =
+                    this.color;
+
+
+                ctx.beginPath();
+
+
+                ctx.arc(
+                    this.x,
+                    this.y,
+                    this.size,
+                    0,
+                    Math.PI
+                    *
+                    2
+                );
+
+
+                ctx.fillStyle =
+                    hexToRGBA(
+                        this.color,
+                        Math.max(
+                            this.alpha,
+                            0
+                        )
+                    );
+
+
+                ctx.fill();
+
+
+                ctx.restore();
+            }
+        }
+
+
+
+        /* =========================
+           ROCKET
+        ========================== */
+
+        class Rocket {
+
+            constructor(
+                targetX,
+                targetY,
+                color
+            ) {
+
+                this.x =
+                    width
+                    *
+                    (
+                        0.15
+                        +
+                        Math.random()
+                        *
+                        0.7
+                    );
+
+
+                this.y =
+                    height
+                    +
+                    20;
+
+
+                this.targetX =
+                    targetX;
+
+
+                this.targetY =
+                    targetY;
+
+
+                this.color =
+                    color;
+
+
+                const dx =
+                    targetX
+                    -
+                    this.x;
+
+
+                const dy =
+                    targetY
+                    -
+                    this.y;
+
+
+                const distance =
+                    Math.hypot(
+                        dx,
+                        dy
+                    );
+
+
+                const speed =
+                    8
+                    +
+                    Math.random()
+                    *
+                    2;
+
+
+                this.vx =
+                    dx
+                    /
+                    distance
+                    *
+                    speed;
+
+
+                this.vy =
+                    dy
+                    /
+                    distance
+                    *
+                    speed;
+
+
+                this.done =
+                    false;
+
+
+                this.trail =
+                    [];
+            }
+
+
+
+            update() {
+
+                this.trail.push({
+                    x:
+                        this.x,
+
+                    y:
+                        this.y
+                });
+
+
+                if (
+                    this.trail.length
+                    >
+                    7
+                ) {
+
+                    this.trail.shift();
+                }
+
+
+                this.x +=
+                    this.vx;
+
+
+                this.y +=
+                    this.vy;
+
+
+                const distance =
+                    Math.hypot(
+
+                        this.targetX
+                        -
+                        this.x,
+
+                        this.targetY
+                        -
+                        this.y
+                    );
+
+
+                if (
+                    distance < 15
+                    ||
+                    this.y
+                    <=
+                    this.targetY
+                ) {
+
+                    this.done =
+                        true;
+
+
+                    explode(
+                        this.targetX,
+                        this.targetY,
+                        this.color
+                    );
+                }
+            }
+
+
+
+            draw() {
+
+                ctx.save();
+
+
+                ctx.globalCompositeOperation =
+                    "lighter";
+
+
+                for (
+                    let i = 0;
+                    i
+                    <
+                    this.trail.length;
+                    i++
+                ) {
+
+                    const point =
+                        this.trail[i];
+
+
+                    ctx.beginPath();
+
+
+                    ctx.arc(
+                        point.x,
+                        point.y,
+                        1.3,
+                        0,
+                        Math.PI
+                        *
+                        2
+                    );
+
+
+                    ctx.fillStyle =
+                        "rgba(255,220,160,"
+                        +
+                        (
+                            (
+                                i + 1
+                            )
+                            /
+                            this.trail.length
+                            *
+                            0.45
+                        )
+                        +
+                        ")";
+
+
+                    ctx.fill();
+                }
+
+
+
+                ctx.shadowBlur =
+                    12;
+
+
+                ctx.shadowColor =
+                    "#ffe4b5";
+
+
+                ctx.beginPath();
+
+
+                ctx.arc(
+                    this.x,
+                    this.y,
+                    2.2,
+                    0,
+                    Math.PI
+                    *
+                    2
+                );
+
+
+                ctx.fillStyle =
+                    "#ffffff";
+
+
+                ctx.fill();
+
+
+                ctx.restore();
+            }
+        }
+
+
+
+        /* =========================
+           HEX -> RGBA
+        ========================== */
+
+        function hexToRGBA(
+            hex,
+            alpha
+        ) {
+
+            const value =
+                hex.replace(
+                    "#",
+                    ""
+                );
+
+
+            const number =
+                parseInt(
+                    value,
+                    16
+                );
+
+
+            const red =
+                (
+                    number
+                    >>
+                    16
+                )
+                &
+                255;
+
+
+            const green =
+                (
+                    number
+                    >>
+                    8
+                )
+                &
+                255;
+
+
+            const blue =
+                number
+                &
+                255;
+
+
+            return (
+                "rgba("
+                +
+                red
+                +
+                ","
+                +
+                green
+                +
+                ","
+                +
+                blue
+                +
+                ","
+                +
+                alpha
+                +
+                ")"
+            );
+        }
+
+
+
+        /* =========================
+           NỔ PHÁO HOA
+        ========================== */
+
+        function explode(
+            x,
+            y,
+            mainColor
+        ) {
+
+            /*
+                Mobile ít particle hơn
+                để tránh lag.
+            */
+
+            const mobile =
+                window.innerWidth
+                <
+                768;
+
+
+            const count =
+                mobile
+                ?
+                55
+                +
+                Math.floor(
+                    Math.random()
+                    *
+                    25
+                )
+                :
+                85
+                +
+                Math.floor(
+                    Math.random()
+                    *
+                    35
+                );
+
+
+            const secondColor =
+                fireworkColors[
+                    Math.floor(
+                        Math.random()
+                        *
+                        fireworkColors.length
+                    )
+                ];
+
+
+            for (
+                let i = 0;
+                i < count;
+                i++
+            ) {
+
+                const angle =
+                    (
+                        Math.PI
+                        *
+                        2
+                    )
+                    *
+                    (
+                        i
+                        /
+                        count
+                    )
+                    +
+                    (
+                        Math.random()
+                        -
+                        0.5
+                    )
+                    *
+                    0.08;
+
+
+                const speed =
+                    2.4
+                    +
+                    Math.random()
+                    *
+                    6.2;
+
+
+                const color =
+                    Math.random()
+                    >
+                    0.45
+                    ?
+                    mainColor
+                    :
+                    secondColor;
+
+
+                particles.push(
+
+                    new Particle(
+
+                        x,
+
+                        y,
+
+                        color,
+
+                        angle,
+
+                        speed,
+
+                        1.1
+                        +
+                        Math.random()
+                        *
+                        1.5
+                    )
+                );
+            }
+
+
+            /*
+                Tâm pháo sáng trắng
+            */
+
+            for (
+                let i = 0;
+                i < 12;
+                i++
+            ) {
+
+                particles.push(
+
+                    new Particle(
+
+                        x,
+
+                        y,
+
+                        "#ffffff",
+
+                        Math.random()
+                        *
+                        Math.PI
+                        *
+                        2,
+
+                        1
+                        +
+                        Math.random()
+                        *
+                        3,
+
+                        1
+                    )
+                );
+            }
+        }
+
+
+
+        /* =========================
+           PHÓNG PHÁO
+        ========================== */
+
+        function launchFirework(
+            x,
+            y
+        ) {
+
+            const color =
+                fireworkColors[
+                    Math.floor(
+                        Math.random()
+                        *
+                        fireworkColors.length
+                    )
+                ];
+
+
+            rockets.push(
+
+                new Rocket(
+                    x,
+                    y,
+                    color
+                )
+            );
+        }
+
+
+
+        function fireworksBurst(
+            x,
+            y,
+            amount
+        ) {
+
+            amount =
+                amount
+                ||
+                4;
+
+
+            for (
+                let i = 0;
+                i < amount;
+                i++
+            ) {
+
+                setTimeout(
+                    function () {
+
+                        launchFirework(
+
+                            Math.max(
+                                60,
+
+                                Math.min(
+
+                                    width
+                                    -
+                                    60,
+
+                                    x
+                                    +
+                                    (
+                                        Math.random()
+                                        -
+                                        0.5
+                                    )
+                                    *
+                                    width
+                                    *
+                                    0.55
+                                )
+                            ),
+
+                            Math.max(
+                                80,
+
+                                Math.min(
+
+                                    height
+                                    *
+                                    0.58,
+
+                                    y
+                                    +
+                                    (
+                                        Math.random()
+                                        -
+                                        0.5
+                                    )
+                                    *
+                                    170
+                                )
+                            )
+                        );
+
+                    },
+                    i * 240
+                );
+            }
+        }
+
+
+
+        function fireworksShow(
+            duration
+        ) {
+
+            showUntil =
+                Date.now()
+                +
+                duration;
+        }
+
+
+
+        /* =========================
+           PHÁO HOA MỞ ĐẦU
+        ========================== */
+
+        setTimeout(
+            function () {
+
+                fireworksShow(
+                    3500
+                );
+
+            },
+            800
+        );
+
+
+
+        /* =========================
+           ANIMATION LOOP
+        ========================== */
+
+        function animateFireworks() {
+
+            requestAnimationFrame(
+                animateFireworks
+            );
+
+
+            /*
+                QUAN TRỌNG:
+                chỉ xóa canvas.
+
+                Không tô nền đen.
+                Vì tô nền đen sẽ che
+                giao diện trên điện thoại.
+            */
+
+            ctx.clearRect(
+                0,
+                0,
+                width,
+                height
+            );
+
+
+            /*
+                Bắn pháo khi đang
+                trong thời gian show.
+            */
+
+            if (
+                Date.now()
+                <
+                showUntil
+            ) {
+
+                const mobile =
+                    width
+                    <
+                    768;
+
+
+                const chance =
+                    mobile
+                    ?
+                    0.035
+                    :
+                    0.055;
+
+
+                if (
+                    Math.random()
+                    <
+                    chance
+                ) {
+
+                    launchFirework(
+
+                        width
+                        *
+                        (
+                            0.15
+                            +
+                            Math.random()
+                            *
+                            0.7
+                        ),
+
+                        height
+                        *
+                        (
+                            0.12
+                            +
+                            Math.random()
+                            *
+                            0.38
+                        )
+                    );
+                }
+            }
+
+
+
+            /* ROCKETS */
+
+            for (
+                let i =
+                    rockets.length
+                    -
+                    1;
+
+                i >= 0;
+
+                i--
+            ) {
+
+                rockets[i].update();
+
+                rockets[i].draw();
+
+
+                if (
+                    rockets[i].done
+                ) {
+
+                    rockets.splice(
+                        i,
+                        1
+                    );
+                }
+            }
+
+
+
+            /* PARTICLES */
+
+            for (
+                let i =
+                    particles.length
+                    -
+                    1;
+
+                i >= 0;
+
+                i--
+            ) {
+
+                particles[i].update();
+
+                particles[i].draw();
+
+
+                if (
+                    particles[i].alpha
+                    <=
+                    0
+                ) {
+
+                    particles.splice(
+                        i,
+                        1
+                    );
+                }
+            }
+        }
+
+
+
+        animateFireworks();
+
+    </script>
+
 </body>
 </html>
